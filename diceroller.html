@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dice Roller</h1>
+    <p>Select the number of 6-sided dice to roll (1-500):</p>
+    <input type="number" id="diceCount" min="1" max="500" value="1">
+    <button onclick="rollDice()">Roll Dice</button>
+
+    <h2>Results</h2>
+    <table id="resultsTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>Die Number</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        function rollDice() {
+            const diceCount = parseInt(document.getElementById('diceCount').value);
+            const resultsTable = document.getElementById('resultsTable');
+            const tableBody = resultsTable.querySelector('tbody');
+
+            if (isNaN(diceCount) || diceCount < 1 || diceCount > 500) {
+                alert('Please enter a number between 1 and 500.');
+                return;
+            }
+
+            // Clear previous results
+            tableBody.innerHTML = '';
+
+            // Roll dice and populate the table
+            for (let i = 1; i <= diceCount; i++) {
+                const result = Math.floor(Math.random() * 6) + 1;
+                const row = document.createElement('tr');
+
+                const dieNumberCell = document.createElement('td');
+                dieNumberCell.textContent = i;
+
+                const resultCell = document.createElement('td');
+                resultCell.textContent = result;
+
+                row.appendChild(dieNumberCell);
+                row.appendChild(resultCell);
+                tableBody.appendChild(row);
+            }
+
+            resultsTable.style.display = 'table';
+        }
+    </script>
+</body>
+</html>
