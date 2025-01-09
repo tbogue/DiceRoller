@@ -51,11 +51,30 @@
         </tbody>
     </table>
 
+    <h2>Summary</h2>
+    <table id="summaryTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>Total Births</th>
+                <th>Total Deaths</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="totalBirths">0</td>
+                <td id="totalDeaths">0</td>
+            </tr>
+        </tbody>
+    </table>
+
     <script>
         function rollDice() {
             const diceCount = parseInt(document.getElementById('diceCount').value);
             const resultsTable = document.getElementById('resultsTable');
             const tableBody = resultsTable.querySelector('tbody');
+            const summaryTable = document.getElementById('summaryTable');
+            const totalBirthsCell = document.getElementById('totalBirths');
+            const totalDeathsCell = document.getElementById('totalDeaths');
 
             if (isNaN(diceCount) || diceCount < 1 || diceCount > 500) {
                 alert('Please enter a number between 1 and 500.');
@@ -64,6 +83,8 @@
 
             // Clear previous results
             tableBody.innerHTML = '';
+            let totalBirths = 0;
+            let totalDeaths = 0;
 
             // Define dice face emojis
             const diceFaces = [
@@ -89,8 +110,10 @@
                 const birthDeathCell = document.createElement('td');
                 if (result === 3 || result === 6) {
                     birthDeathCell.textContent = 'Birth';
+                    totalBirths++;
                 } else if (result === 1) {
                     birthDeathCell.textContent = 'Death';
+                    totalDeaths++;
                 } else {
                     birthDeathCell.textContent = '';
                 }
@@ -101,7 +124,12 @@
                 tableBody.appendChild(row);
             }
 
+            // Update summary table
+            totalBirthsCell.textContent = totalBirths;
+            totalDeathsCell.textContent = totalDeaths;
+
             resultsTable.style.display = 'table';
+            summaryTable.style.display = 'table';
         }
     </script>
 </body>
